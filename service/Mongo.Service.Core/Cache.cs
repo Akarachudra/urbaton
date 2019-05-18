@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Mongo.Service.Core.Entities;
+using Mongo.Service.Core.Storable;
 
 namespace Mongo.Service.Core
 {

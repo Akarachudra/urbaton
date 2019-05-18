@@ -1,26 +1,302 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-	<CodeAnalysisRuleSet>..\Mongo.Service.Core.ruleset</CodeAnalysisRuleSet>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DBFD3421-5E29-4AED-B490-FA3E0E8C6001}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mongo.Service.Core</RootNamespace>
+    <AssemblyName>Mongo.Service.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Cauldron.Client, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Cauldron.Client.1.0.98\lib\net45\Cauldron.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DnDns, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Topology.1.0.32\lib\net35\DnDns.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Beans, Version=7.3.4830.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\IKVM.OpenJDK.Beans.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core, Version=7.3.4830.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\IKVM.OpenJDK.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Security, Version=7.3.4830.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\IKVM.OpenJDK.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Text, Version=7.3.4830.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\IKVM.OpenJDK.Text.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Util, Version=7.3.4830.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\IKVM.OpenJDK.Util.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.API, Version=7.3.4830.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\IKVM.OpenJDK.XML.API.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.Runtime, Version=7.3.4830.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\IKVM.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.Runtime.JNI, Version=7.3.4830.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\IKVM.Runtime.JNI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.ClusterClient.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.ClusterClient.Core.1.0.120\lib\net45\Kontur.ClusterClient.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.ClusterClient.Topology.CC, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.ClusterClient.Topology.CC.1.0.41\lib\net45\Kontur.ClusterClient.Topology.CC.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.ClusterClient.Transport.Http, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.ClusterClient.Transport.Http.1.0.86\lib\net45\Kontur.ClusterClient.Transport.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.ClusterConfig.Client, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.ClusterConfig.Client.1.0.227\lib\net35\Kontur.ClusterConfig.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.ClusterConfig.Common, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.ClusterConfig.Client.1.0.227\lib\net35\Kontur.ClusterConfig.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Configuration, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Configuration.1.0.44\lib\net40\Kontur.Configuration.exe</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Core.1.0.268\lib\net35\Kontur.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Core.Infra, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Core.Infra.1.0.99\lib\net45\Kontur.Core.Infra.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Datacenter, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Datacenter.1.0.23\lib\net45\Kontur.Datacenter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Dns, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Topology.1.0.32\lib\net35\Kontur.Dns.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.FlowingContext, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.FlowingContext.1.0.7\lib\net35\Kontur.FlowingContext.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Http, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Http.1.0.253\lib\net45\Kontur.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Logging, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Logging.1.0.136\lib\net35\Kontur.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Logging.Log4net, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Logging.Log4net.1.0.136\lib\net35\Kontur.Logging.Log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Topology, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Topology.1.0.32\lib\net35\Kontur.Topology.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kontur.Tracing, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kontur.Tracing.1.0.185\lib\net45\Kontur.Tracing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.2.0.2\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.2.0.2\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.4.4.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MongoDB.Bson.2.4.4\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.4.4.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MongoDB.Driver.2.4.4\lib\net45\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.4.4.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.4.4\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.8\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.WebApi.4.0.8\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Topshelf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Topshelf.4.0.3\lib\net452\Topshelf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZooKeeper.Client, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\ZooKeeper.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZooKeeper.Curator, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Client.1.0.245\lib\net45\ZooKeeper.Curator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZooKeeper.Recipes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Recipes.1.0.245\lib\net45\ZooKeeper.Recipes.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZooKeeper.ServiceDiscovery, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.ServiceDiscovery.1.0.245\lib\net45\ZooKeeper.ServiceDiscovery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="7.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
-    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <Compile Include="Cache.cs" />
+    <Compile Include="Controllers\CameraController.cs" />
+    <Compile Include="Controllers\InfoController.cs" />
+    <Compile Include="Controllers\SampleController.cs" />
+    <Compile Include="Controllers\System\StatusController.cs" />
+    <Compile Include="EntryPoint.cs" />
+    <Compile Include="Extensions\PredicateBuilder.cs" />
+    <Compile Include="IInfoUpdater.cs" />
+    <Compile Include="InfoUpdater.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Mapping\Mapper.cs" />
+    <Compile Include="Services\Mapping\IMapper.cs" />
+    <Compile Include="Services\EntityService.cs" />
+    <Compile Include="Services\IEntityService.cs" />
+    <Compile Include="Services\SyncApiResult.cs" />
+    <Compile Include="Statistics\CauldronSettings.cs" />
+    <Compile Include="Statistics\CauldronStatisticsRecorder.cs" />
+    <Compile Include="Statistics\ICauldronSettings.cs" />
+    <Compile Include="Statistics\IRequestCounters.cs" />
+    <Compile Include="Statistics\IStatisticsRecorder.cs" />
+    <Compile Include="Statistics\ISystemMetricsProvider.cs" />
+    <Compile Include="Statistics\MetricsWorker.cs" />
+    <Compile Include="Statistics\RequestCounters.cs" />
+    <Compile Include="Statistics\RequestCountersSample.cs" />
+    <Compile Include="Statistics\SystemMetrics.cs" />
+    <Compile Include="Statistics\SystemMetricsProvider.cs" />
+    <Compile Include="Storable\Base\BaseEntity.cs" />
+    <Compile Include="Storable\Base\IBaseEntity.cs" />
+    <Compile Include="Storable\Camera.cs" />
+    <Compile Include="Storable\Indexes\IIndexes.cs" />
+    <Compile Include="Storable\Indexes\Indexes.cs" />
+    <Compile Include="Storable\Info.cs" />
+    <Compile Include="Storable\Place.cs" />
+    <Compile Include="Storable\SampleEntity.cs" />
+    <Compile Include="Storage\CollectionNameAttribute.cs" />
+    <Compile Include="Storage\EntityStorage.cs" />
+    <Compile Include="Storage\IEntityStorage.cs" />
+    <Compile Include="Storage\IMongoSettings.cs" />
+    <Compile Include="Storage\IMongoStorage.cs" />
+    <Compile Include="Storage\MongoSettings.cs" />
+    <Compile Include="Storage\MongoStorage.cs" />
+    <Compile Include="Storage\SyncEntityResult.cs" />
+    <Compile Include="WebApp\CaptureActionForOwinFilter.cs" />
+    <Compile Include="WebApp\AppBuilderExtensions.cs" />
+    <Compile Include="WebApp\CapturedAction.cs" />
+    <Compile Include="WebApp\ContainerConfig.cs" />
+    <Compile Include="WebApp\ExceptionLogger.cs" />
+    <Compile Include="WebApp\IApiService.cs" />
+    <Compile Include="WebApp\IServiceSettings.cs" />
+    <Compile Include="WebApp\ApiService.cs" />
+    <Compile Include="WebApp\OwinCapturedActionExtensions.cs" />
+    <Compile Include="WebApp\RecordRequestMiddlware.cs" />
+    <Compile Include="WebApp\RequestCountersMiddlware.cs" />
+    <Compile Include="WebApp\ServiceSettings.cs" />
+    <Compile Include="WebApp\Startup.cs" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Mongo.Service.Core.Types\Mongo.Service.Core.Types.csproj" />
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\Mongo.Service.Core.Types\Mongo.Service.Core.Types.csproj">
+      <Project>{4bd178f9-89cf-4778-854a-0b322bdcf8d3}</Project>
+      <Name>Mongo.Service.Core.Types</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

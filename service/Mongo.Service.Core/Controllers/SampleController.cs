@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Mongo.Service.Core.Entities;
+using System.Web.Http;
 using Mongo.Service.Core.Services;
+using Mongo.Service.Core.Storable;
 using Mongo.Service.Core.Types;
 
 namespace Mongo.Service.Core.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class SampleController : ControllerBase
+    public class SampleController : ApiController
     {
         private readonly IEntityService<ApiSample, SampleEntity> service;
 
@@ -19,29 +16,35 @@ namespace Mongo.Service.Core.Controllers
             this.service = service;
         }
 
-        [HttpGet("all")]
-        public async Task<IEnumerable<ApiSample>> GetAllAsync()
+        public IEnumerable<ApiSample> GetAll()
         {
-            return await this.service.ReadAllAsync().ConfigureAwait(false);
+            return service.ReadAll();
+        }
+        
+        public ApiSample Get(Guid id)
+        {
+            return service.Read(id);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ApiSample> GetAsync(Guid id)
+        public ApiSync<ApiSample> Get(long lastSync)
         {
-            return await this.service.ReadAsync(id).ConfigureAwait(false);
-        }
+            ApiSample[] newData;
+            Guid[] deletedIds;
+            
+            var newSync = service.ReadSyncedData(lastSync, out newData, out deletedIds);
 
-        [HttpGet]
-        public async Task<ApiSync<ApiSample>> GetAsync(long lastSync)
-        {
-            var apiSync = await this.service.ReadSyncedDataAsync(lastSync).ConfigureAwait(false);
+            var apiSync = new ApiSync<ApiSample>
+            {
+                Data = newData,
+                DeletedData = deletedIds,
+                LastSync = newSync
+            };
             return apiSync;
         }
 
-        [HttpPost]
-        public async Task PostAsync(ApiSample apiSample)
+        public void Post(ApiSample apiSample)
         {
-            await this.service.WriteAsync(apiSample).ConfigureAwait(false);
+            service.Write(apiSample);
         }
     }
 }

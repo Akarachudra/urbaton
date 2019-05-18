@@ -1,110 +1,246 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Mongo.Service.Core.Entities.Base;
-using Mongo.Service.Core.Repository;
 using Mongo.Service.Core.Services.Mapping;
-using Mongo.Service.Core.Types;
+using Mongo.Service.Core.Storable.Base;
+using Mongo.Service.Core.Storage;
 using Mongo.Service.Core.Types.Base;
 
 namespace Mongo.Service.Core.Services
 {
-    public class EntityService<TApi, TEntity> : IEntityService<TApi, TEntity>
-            where TApi : IApiBase
-            where TEntity : IBaseEntity
+    public class EntityService<TApi, TEntity> : IEntityService<TApi, TEntity> where TApi : IApiBase where TEntity : IBaseEntity
     {
         private readonly IMapper<TApi, TEntity> mapper;
 
-        public EntityService(IMongoRepository<TEntity> repository, IMapper<TApi, TEntity> mapper)
+        public EntityService(IEntityStorage<TEntity> storage, IMapper<TApi, TEntity> mapper)
         {
-            this.Repository = repository;
+            Storage = storage;
             this.mapper = mapper;
         }
 
-        public IMongoRepository<TEntity> Repository { get; }
+        public IEntityStorage<TEntity> Storage { get; }
+
+        public virtual TApi Read(Guid id)
+        {
+            var entity = Storage.Read(id);
+            return mapper.GetApiFromEntity(entity);
+        }
+
+        public virtual bool TryRead(Guid id, out TApi apiEntity)
+        {
+            TEntity entity;
+            var result = Storage.TryRead(id, out entity);
+            if (result)
+            {
+                apiEntity = mapper.GetApiFromEntity(entity);
+                return true;
+            }
+            apiEntity = default(TApi);
+            return false;
+        }
+
+        public virtual TApi[] Read(int skip, int limit)
+        {
+            var entities = Storage.Read(skip, limit);
+            return mapper.GetApiFromEntity(entities);
+        }
+
+        public virtual TApi[] Read(Expression<Func<TEntity, bool>> filter, int skip, int limit)
+        {
+            var entities = Storage.Read(filter, skip, limit);
+            return mapper.GetApiFromEntity(entities);
+        }
+
+        public virtual TApi[] Read(Expression<Func<TEntity, bool>> filter, int skip, int limit, Expression<Func<TEntity, object>> orderField,
+                                   bool desc = false)
+        {
+            var entities = Storage.Read(filter, skip, limit, orderField, desc);
+            return mapper.GetApiFromEntity(entities);
+        }
+
+        public virtual TApi[] Read(Expression<Func<TEntity, bool>> filter)
+        {
+            var entities = Storage.Read(filter);
+            return mapper.GetApiFromEntity(entities);
+        }
+
+        public virtual TApi[] ReadAll()
+        {
+            var entities = Storage.ReadAll();
+            return mapper.GetApiFromEntity(entities);
+        }
+
+        public virtual Guid[] ReadIds(Expression<Func<TEntity, bool>> filter)
+        {
+            return Storage.ReadIds(filter);
+        }
+
+        public virtual long ReadSyncedData(long lastSync, out TApi[] newData, out Guid[] deletedData,
+                                           Expression<Func<TEntity, bool>> additionalFilter = null)
+        {
+            TEntity[] newEntities;
+            TEntity[] deletedEntities;
+
+            var newSync = Storage.ReadSyncedData(lastSync, out newEntities, out deletedEntities, additionalFilter);
+
+            newData = mapper.GetApiFromEntity(newEntities);
+            deletedData = deletedEntities.Select(x => x.Id).ToArray();
+
+            return newSync;
+        }
+
+        public virtual bool Exists(Guid id)
+        {
+            return Storage.Exists(id);
+        }
+
+        public virtual void Write(TApi apiEntity)
+        {
+            var entity = mapper.GetEntityFromApi(apiEntity);
+            Storage.Write(entity);
+        }
+
+        public virtual void Write(TApi[] apiEntities)
+        {
+            foreach (var apiEntity in apiEntities)
+            {
+                Write(apiEntity);
+            }
+        }
+
+        public virtual void Remove(Guid id)
+        {
+            Storage.Remove(id);
+        }
+
+        public virtual void Remove(Guid[] ids)
+        {
+            Storage.Remove(ids);
+        }
+
+        public virtual void Remove(TApi apiEntity)
+        {
+            Storage.Remove(apiEntity.Id);
+        }
+
+        public virtual void Remove(TApi[] apiEntities)
+        {
+            foreach (var apiEntity in apiEntities)
+            {
+                Storage.Remove(apiEntity.Id);
+            }
+        }
 
         public virtual async Task<TApi> ReadAsync(Guid id)
         {
-            var entity = await this.Repository.ReadAsync(id).ConfigureAwait(false);
-            return this.mapper.GetApiFromEntity(entity);
+            var entity = await Storage.ReadAsync(id);
+            return mapper.GetApiFromEntity(entity);
         }
 
-        public virtual async Task<IList<TApi>> ReadAsync(int skip, int limit)
+        public virtual async Task<Tuple<bool, TApi>> TryReadAsync(Guid id)
         {
-            var entities = await this.Repository.ReadAsync(skip, limit).ConfigureAwait(false);
-            return this.mapper.GetApiFromEntity(entities);
+            var result = await Storage.TryReadAsync(id);
+            var exists = result.Item1;
+            if (exists)
+            {
+                var entity = result.Item2;
+                var apiEntity = mapper.GetApiFromEntity(entity);
+                return Tuple.Create(true, apiEntity);
+            }
+            return Tuple.Create(false, default(TApi));
         }
 
-        public virtual async Task<IList<TApi>> ReadAsync(Expression<Func<TEntity, bool>> filter, int skip, int limit)
+        public virtual async Task<TApi[]> ReadAsync(int skip, int limit)
         {
-            var entities = await this.Repository.ReadAsync(filter, skip, limit).ConfigureAwait(false);
-            return this.mapper.GetApiFromEntity(entities);
+            var entities = await Storage.ReadAsync(skip, limit);
+            return mapper.GetApiFromEntity(entities);
         }
 
-        public virtual async Task<IList<TApi>> ReadAsync(Expression<Func<TEntity, bool>> filter)
+        public virtual async Task<TApi[]> ReadAsync(Expression<Func<TEntity, bool>> filter, int skip, int limit)
         {
-            var entities = await this.Repository.ReadAsync(filter).ConfigureAwait(false);
-            return this.mapper.GetApiFromEntity(entities);
+            var entities = await Storage.ReadAsync(filter, skip, limit);
+            return mapper.GetApiFromEntity(entities);
         }
 
-        public virtual async Task<IList<TApi>> ReadAllAsync()
+        public virtual async Task<TApi[]> ReadAsync(Expression<Func<TEntity, bool>> filter, int skip, int limit,
+                                                    Expression<Func<TEntity, object>> orderField, bool desc = false)
         {
-            var entities = await this.Repository.ReadAllAsync().ConfigureAwait(false);
-            return this.mapper.GetApiFromEntity(entities);
+            var entities = await Storage.ReadAsync(filter, skip, limit, orderField, desc);
+            return mapper.GetApiFromEntity(entities);
         }
 
-        public virtual async Task<ApiSync<TApi>> ReadSyncedDataAsync(long lastSync, Expression<Func<TEntity, bool>> additionalFilter = null)
+        public virtual async Task<TApi[]> ReadAsync(Expression<Func<TEntity, bool>> filter)
         {
-            var apiSync = new ApiSync<TApi>();
-            var syncResult = await this.Repository.ReadSyncedDataAsync(lastSync, additionalFilter).ConfigureAwait(false);
+            var entities = await Storage.ReadAsync(filter);
+            return mapper.GetApiFromEntity(entities);
+        }
 
-            apiSync.LastSync = syncResult.LastSync;
-            apiSync.Data = this.mapper.GetApiFromEntity(syncResult.NewData);
-            apiSync.DeletedData = syncResult.DeletedData.Select(x => x.Id).ToArray();
+        public virtual async Task<TApi[]> ReadAllAsync()
+        {
+            var entities = await Storage.ReadAllAsync();
+            return mapper.GetApiFromEntity(entities);
+        }
 
-            return apiSync;
+        public virtual async Task<Guid[]> ReadIdsAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            return await Storage.ReadIdsAsync(filter);
+        }
+
+        public virtual async Task<SyncApiResult<TApi>> ReadSyncedDataAsync(long lastSync, Expression<Func<TEntity, bool>> additionalFilter = null)
+        {
+            var syncEntityResult = await Storage.ReadSyncedDataAsync(lastSync, additionalFilter);
+
+            var syncApiResult = new SyncApiResult<TApi>
+            {
+                LastSync = syncEntityResult.LastSync,
+                NewData = mapper.GetApiFromEntity(syncEntityResult.NewData),
+                DeletedIds = syncEntityResult.DeletedData.Select(x => x.Id).ToArray()
+            };
+
+            return syncApiResult;
         }
 
         public virtual async Task<bool> ExistsAsync(Guid id)
         {
-            return await this.Repository.ExistsAsync(id).ConfigureAwait(false);
+            return await Storage.ExistsAsync(id);
         }
 
         public virtual async Task WriteAsync(TApi apiEntity)
         {
-            var entity = this.mapper.GetEntityFromApi(apiEntity);
-            await this.Repository.WriteAsync(entity).ConfigureAwait(false);
+            var entity = mapper.GetEntityFromApi(apiEntity);
+            await Storage.WriteAsync(entity);
         }
 
-        public virtual async Task WriteAsync(IEnumerable<TApi> apiEntities)
+        public virtual async Task WriteAsync(TApi[] apiEntities)
         {
             foreach (var apiEntity in apiEntities)
             {
-                await this.WriteAsync(apiEntity).ConfigureAwait(false);
+                await WriteAsync(apiEntity);
             }
         }
 
         public virtual async Task RemoveAsync(Guid id)
         {
-            await this.Repository.RemoveAsync(id).ConfigureAwait(false);
+            await Storage.RemoveAsync(id);
         }
 
-        public virtual async Task RemoveAsync(IEnumerable<Guid> ids)
+        public virtual async Task RemoveAsync(Guid[] ids)
         {
-            await this.Repository.RemoveAsync(ids).ConfigureAwait(false);
+            await Storage.RemoveAsync(ids);
         }
 
         public virtual async Task RemoveAsync(TApi apiEntity)
         {
-            await this.Repository.RemoveAsync(apiEntity.Id).ConfigureAwait(false);
+            await Storage.RemoveAsync(apiEntity.Id);
         }
 
-        public virtual async Task RemoveAsync(IEnumerable<TApi> apiEntities)
+        public virtual async Task RemoveAsync(TApi[] apiEntities)
         {
-            var entities = this.mapper.GetEntityFromApi(apiEntities);
-            await this.Repository.RemoveAsync(entities).ConfigureAwait(false);
+            foreach (var apiEntity in apiEntities)
+            {
+                await Storage.RemoveAsync(apiEntity.Id);
+            }
         }
     }
 }

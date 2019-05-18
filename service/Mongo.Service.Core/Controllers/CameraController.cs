@@ -1,21 +1,32 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Mongo.Service.Core.Entities;
-using Mongo.Service.Core.Repository;
+using System.Web.Http;
+using Mongo.Service.Core.Storable;
+using Mongo.Service.Core.Storage;
 using Mongo.Service.Core.Types;
 
 namespace Mongo.Service.Core.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CameraController : ControllerBase
+    public class CameraController : ApiController
     {
-        private readonly IMongoRepository<Camera> cameraRepository;
+        private readonly IEntityStorage<Camera> cameraRepository;
 
-        public CameraController(IMongoRepository<Camera> cameraRepository)
+        public CameraController(IEntityStorage<Camera> cameraRepository)
         {
             this.cameraRepository = cameraRepository;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<ApiCameraInfo>> GetAllAsync()
+        {
+            var cameras = await this.cameraRepository.ReadAllAsync().ConfigureAwait(false);
+            return cameras.Select(
+                x => new ApiCameraInfo
+                {
+                    Description = x.Description,
+                    Number = x.Number
+                });
         }
 
         [HttpPut]

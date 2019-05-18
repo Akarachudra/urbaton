@@ -25,7 +25,7 @@ namespace CarDetection
         public Form1()
         {
             InitializeComponent();
-            this.detectionApi = RestService.For<IDetectionApi>("http://localhost:4444");
+            this.detectionApi = RestService.For<IDetectionApi>("http://localhost:50946");
         }
 
         private void Form1_Load(object sender, EventArgs e)

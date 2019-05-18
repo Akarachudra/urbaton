@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Mongo.Service.Core.Types.Base
 {
-    public class ApiBase : IApiBase
+    [DataContract]
+    public abstract class ApiBase : IApiBase
     {
+        [DataMember]
         public Guid Id { get; set; }
     }
 }
