@@ -45,46 +45,6 @@ namespace CarDetection
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            var imag = Image.FromFile("C:\\2.png");
-            var grayscale = new Grayscale(0.2125, 0.7154, 0.0721);
-            var grayImage = grayscale.Apply(new Bitmap(imag));
-
-            const int x = 560;
-            const int y = 550;
-            const int deltaX = 80;
-            const int deltaY = 30;
-            var rectPoint = new Rectangle(new Point(x, y), new Size(deltaX, deltaY));
-            e.Graphics.DrawImage(grayImage, new Point(0, 0));
-            e.Graphics.DrawRectangle(new Pen(Color.Yellow, 2), rectPoint);
-            var count = 0;
-            long pixelsSummaryColor = 0;
-            for (var i = x; i <= x + deltaX; i++)
-            {
-                for (var j = y; j <= y + deltaY; j++)
-                {
-                    count++;
-                    var pixel = grayImage.GetPixel(i, j);
-                    pixelsSummaryColor += pixel.ToArgb();
-                }
-            }
-
-            var mediumColor = pixelsSummaryColor / count;
-            const int colorDelta = 350000;
-            var closeCount = 0;
-            for (var i = x; i <= x + deltaX; i++)
-            {
-                for (var j = y; j <= y + deltaY; j++)
-                {
-                    var pixel = grayImage.GetPixel(i, j).ToArgb();
-                    if (Math.Abs(mediumColor - pixel) < colorDelta)
-                    {
-                        closeCount++;
-                    }
-                }
-            }
-
-            var percent = (double)closeCount / count * 100;
-            e.Graphics.DrawString(percent.ToString(), new Font(FontFamily.GenericMonospace, 14.0f), new SolidBrush(Color.Aqua), 200, 200);
         }
 
         public void video_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -122,10 +82,10 @@ namespace CarDetection
         {
             lock (locker)
             {
-                var pen = new Pen(Color.Yellow, 2);
+                var index = -1;
                 foreach (var place in DataCache.Places)
                 {
-                    graphics.DrawRectangle(pen, new Rectangle(place.X, place.Y, place.Width, place.Height));
+                    index++;
                     var count = 0;
                     long pixelsSummaryColor = 0;
                     for (var i = place.X; i <= place.X + place.Width; i++)
@@ -154,6 +114,18 @@ namespace CarDetection
                     }
 
                     var percent = (double)closeCount / count * 100;
+                    var pen = new Pen(Color.Chartreuse, 2);
+                    if (percent < 90)
+                    {
+                        pen = new Pen(Color.Red, 2);
+                    }
+
+                    if (listBox1.SelectedIndex == index)
+                    {
+                        pen = new Pen(Color.DodgerBlue, 3);
+                    }
+
+                    graphics.DrawRectangle(pen, new Rectangle(place.X, place.Y, place.Width, place.Height));
                     graphics.DrawString(
                         percent.ToString(),
                         new Font(FontFamily.GenericMonospace, 10.0f),
