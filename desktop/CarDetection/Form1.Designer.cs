@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.addButton = new System.Windows.Forms.Button();
@@ -38,6 +39,8 @@
             this.savePlaceButton = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.sendToServer = new System.Windows.Forms.Button();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -129,7 +132,7 @@
             this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(739, 106);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(273, 532);
+            this.listBox1.Size = new System.Drawing.Size(273, 292);
             this.listBox1.TabIndex = 2;
             this.listBox1.Click += new System.EventHandler(this.listBox1_Click);
             // 
@@ -143,11 +146,30 @@
             this.sendToServer.UseVisualStyleBackColor = true;
             this.sendToServer.Click += new System.EventHandler(this.sendToServer_Click);
             // 
+            // listBox2
+            // 
+            this.listBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 16;
+            this.listBox2.Location = new System.Drawing.Point(739, 404);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(273, 244);
+            this.listBox2.TabIndex = 3;
+            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 646);
+            this.Controls.Add(this.listBox2);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
@@ -176,6 +198,8 @@
         private System.Windows.Forms.Button savePlaceButton;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button sendToServer;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

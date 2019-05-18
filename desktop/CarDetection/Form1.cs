@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using AForge;
 using AForge.Imaging.Filters;
@@ -231,6 +232,27 @@ namespace CarDetection
                         Places = placesCopy
                     })
                 .Wait();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            var feedbacks = this.detectionApi.GetAllFeedbacksAsync().Result;
+            DataCache.Feedbacks = feedbacks;
+            listBox2.Items.Clear();
+            foreach (var feedback in feedbacks)
+            {
+                listBox2.Items.Add(feedback.Title);
+            }
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var index = listBox2.SelectedIndex;
+            if (index != -1)
+            {
+                var feedback = DataCache.Feedbacks[index];
+                MessageBox.Show(feedback.Text, feedback.Title);
+            }
         }
     }
 }
