@@ -125,7 +125,7 @@ namespace CarDetection
 
                     graphics.DrawRectangle(pen, new Rectangle(place.X, place.Y, place.Width, place.Height));
                     graphics.DrawString(
-                        percent.ToString(),
+                        percent.ToString("0.##"),
                         new Font(FontFamily.GenericMonospace, 10.0f),
                         new SolidBrush(Color.Aqua),
                         place.X + place.Width / 2,
