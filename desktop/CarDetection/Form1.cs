@@ -4,9 +4,11 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using AForge;
 using AForge.Imaging.Filters;
 using AForge.Video;
 using Newtonsoft.Json;
+using Point = System.Drawing.Point;
 
 namespace CarDetection
 {
@@ -84,6 +86,14 @@ namespace CarDetection
         public void video_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             var frame = eventArgs.Frame;
+            //var img = frame;
+            ColorFiltering filter = new ColorFiltering();
+            // set color ranges to keep
+            filter.Red = new IntRange(150, 200);
+            filter.Green = new IntRange(150, 200);
+            filter.Blue = new IntRange(150, 200);
+            // apply the filter
+            //filter.ApplyInPlace(img);
             var grayscale = new Grayscale(0.2125, 0.7154, 0.0721);
             var img = grayscale.Apply(frame);
 

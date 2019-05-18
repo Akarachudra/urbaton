@@ -30,13 +30,14 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.savePlaceButton = new System.Windows.Forms.Button();
-            this.xBox = new System.Windows.Forms.TextBox();
-            this.yBox = new System.Windows.Forms.TextBox();
-            this.widthBox = new System.Windows.Forms.TextBox();
-            this.heightBox = new System.Windows.Forms.TextBox();
             this.addButton = new System.Windows.Forms.Button();
+            this.heightBox = new System.Windows.Forms.TextBox();
+            this.widthBox = new System.Windows.Forms.TextBox();
+            this.yBox = new System.Windows.Forms.TextBox();
+            this.xBox = new System.Windows.Forms.TextBox();
+            this.savePlaceButton = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.sendToServer = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +55,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.sendToServer);
             this.panel1.Controls.Add(this.addButton);
             this.panel1.Controls.Add(this.heightBox);
             this.panel1.Controls.Add(this.widthBox);
@@ -65,6 +67,59 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1012, 100);
             this.panel1.TabIndex = 1;
+            // 
+            // addButton
+            // 
+            this.addButton.Location = new System.Drawing.Point(916, 64);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(75, 23);
+            this.addButton.TabIndex = 5;
+            this.addButton.Text = "Add";
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
+            // 
+            // heightBox
+            // 
+            this.heightBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.heightBox.Location = new System.Drawing.Point(944, 23);
+            this.heightBox.Name = "heightBox";
+            this.heightBox.Size = new System.Drawing.Size(46, 22);
+            this.heightBox.TabIndex = 4;
+            // 
+            // widthBox
+            // 
+            this.widthBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.widthBox.Location = new System.Drawing.Point(888, 23);
+            this.widthBox.Name = "widthBox";
+            this.widthBox.Size = new System.Drawing.Size(50, 22);
+            this.widthBox.TabIndex = 3;
+            // 
+            // yBox
+            // 
+            this.yBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.yBox.Location = new System.Drawing.Point(835, 23);
+            this.yBox.Name = "yBox";
+            this.yBox.Size = new System.Drawing.Size(47, 22);
+            this.yBox.TabIndex = 2;
+            // 
+            // xBox
+            // 
+            this.xBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.xBox.Location = new System.Drawing.Point(784, 23);
+            this.xBox.Name = "xBox";
+            this.xBox.Size = new System.Drawing.Size(45, 22);
+            this.xBox.TabIndex = 1;
+            // 
+            // savePlaceButton
+            // 
+            this.savePlaceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.savePlaceButton.Location = new System.Drawing.Point(835, 64);
+            this.savePlaceButton.Name = "savePlaceButton";
+            this.savePlaceButton.Size = new System.Drawing.Size(75, 23);
+            this.savePlaceButton.TabIndex = 0;
+            this.savePlaceButton.Text = "Save";
+            this.savePlaceButton.UseVisualStyleBackColor = true;
+            this.savePlaceButton.Click += new System.EventHandler(this.savePlaceButton_Click);
             // 
             // listBox1
             // 
@@ -78,58 +133,14 @@
             this.listBox1.TabIndex = 2;
             this.listBox1.Click += new System.EventHandler(this.listBox1_Click);
             // 
-            // savePlaceButton
+            // sendToServer
             // 
-            this.savePlaceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.savePlaceButton.Location = new System.Drawing.Point(835, 64);
-            this.savePlaceButton.Name = "savePlaceButton";
-            this.savePlaceButton.Size = new System.Drawing.Size(75, 23);
-            this.savePlaceButton.TabIndex = 0;
-            this.savePlaceButton.Text = "Save";
-            this.savePlaceButton.UseVisualStyleBackColor = true;
-            this.savePlaceButton.Click += new System.EventHandler(this.savePlaceButton_Click);
-            // 
-            // xBox
-            // 
-            this.xBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.xBox.Location = new System.Drawing.Point(784, 23);
-            this.xBox.Name = "xBox";
-            this.xBox.Size = new System.Drawing.Size(45, 22);
-            this.xBox.TabIndex = 1;
-            // 
-            // yBox
-            // 
-            this.yBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.yBox.Location = new System.Drawing.Point(835, 23);
-            this.yBox.Name = "yBox";
-            this.yBox.Size = new System.Drawing.Size(47, 22);
-            this.yBox.TabIndex = 2;
-            // 
-            // widthBox
-            // 
-            this.widthBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.widthBox.Location = new System.Drawing.Point(888, 23);
-            this.widthBox.Name = "widthBox";
-            this.widthBox.Size = new System.Drawing.Size(50, 22);
-            this.widthBox.TabIndex = 3;
-            // 
-            // heightBox
-            // 
-            this.heightBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.heightBox.Location = new System.Drawing.Point(944, 23);
-            this.heightBox.Name = "heightBox";
-            this.heightBox.Size = new System.Drawing.Size(46, 22);
-            this.heightBox.TabIndex = 4;
-            // 
-            // addButton
-            // 
-            this.addButton.Location = new System.Drawing.Point(916, 64);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 23);
-            this.addButton.TabIndex = 5;
-            this.addButton.Text = "Add";
-            this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.addButton_Click);
+            this.sendToServer.Location = new System.Drawing.Point(568, 64);
+            this.sendToServer.Name = "sendToServer";
+            this.sendToServer.Size = new System.Drawing.Size(131, 23);
+            this.sendToServer.TabIndex = 6;
+            this.sendToServer.Text = "Send to server";
+            this.sendToServer.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -163,6 +174,7 @@
         private System.Windows.Forms.TextBox xBox;
         private System.Windows.Forms.Button savePlaceButton;
         private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.Button sendToServer;
     }
 }
 
