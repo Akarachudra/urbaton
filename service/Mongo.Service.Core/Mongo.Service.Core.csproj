@@ -237,6 +237,7 @@
   <ItemGroup>
     <Compile Include="Cache.cs" />
     <Compile Include="Controllers\CameraController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Controllers\System\StatusController.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Storable\Base\BaseEntity.cs" />
     <Compile Include="Storable\Base\IBaseEntity.cs" />
     <Compile Include="Storable\Camera.cs" />
+    <Compile Include="Storable\Feedback.cs" />
     <Compile Include="Storable\Indexes\IIndexes.cs" />
     <Compile Include="Storable\Indexes\Indexes.cs" />
     <Compile Include="Storable\Info.cs" />

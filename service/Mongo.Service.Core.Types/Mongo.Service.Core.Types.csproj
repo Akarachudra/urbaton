@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="ApiCamera.cs" />
     <Compile Include="ApiCameraInfo.cs" />
+    <Compile Include="ApiFeedback.cs" />
     <Compile Include="ApiInfo.cs" />
     <Compile Include="ApiPlace.cs" />
     <Compile Include="ApiSample.cs" />

@@ -27,9 +27,17 @@ namespace Mongo.Service.Core
         {
             try
             {
-                foreach (var e in Cache.Cameras)
+                var cameras = new List<Camera>();
+                lock (Cache.Locker)
                 {
-                    var camera = e.Value;
+                    foreach (var e in Cache.Cameras)
+                    {
+                        cameras.Add(e.Value);
+                    }
+                }
+
+                foreach (var camera in cameras)
+                {
                     using (var webClient = new WebClient())
                     {
                         var data = webClient.DownloadData(camera.Url);
