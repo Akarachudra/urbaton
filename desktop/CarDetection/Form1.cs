@@ -25,7 +25,7 @@ namespace CarDetection
         public Form1()
         {
             InitializeComponent();
-            this.detectionApi = RestService.For<IDetectionApi>("http://localhost:50946");
+            this.detectionApi = RestService.For<IDetectionApi>("http://localhost:12512");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -255,11 +255,12 @@ namespace CarDetection
             }
 
             this.detectionApi.PutCameraAsync(
-                new Camera
-                {
-                    Number = 1,
-                    Places = placesCopy
-                }).Wait();
+                    new Camera
+                    {
+                        Number = 1,
+                        Places = placesCopy
+                    })
+                .Wait();
         }
     }
 }
