@@ -241,7 +241,13 @@ namespace CarDetection
             listBox2.Items.Clear();
             foreach (var feedback in feedbacks)
             {
-                listBox2.Items.Add(feedback.Title);
+                var title = feedback.Title;
+                if (string.IsNullOrWhiteSpace(feedback.Title))
+                {
+                    title = "<NO TITLE>";
+                }
+
+                listBox2.Items.Add(title);
             }
         }
 
