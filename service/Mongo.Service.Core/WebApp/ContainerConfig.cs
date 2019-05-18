@@ -27,9 +27,11 @@ namespace Mongo.Service.Core.WebApp
             container.RegisterSingleton<IEntityStorage<SampleEntity>, EntityStorage<SampleEntity>>();
             container.RegisterSingleton<IEntityStorage<Camera>, EntityStorage<Camera>>();
             container.RegisterSingleton<IEntityStorage<Info>, EntityStorage<Info>>();
+            container.RegisterSingleton<IEntityStorage<Feedback>, EntityStorage<Feedback>>();
             container.RegisterSingleton<IIndexes<SampleEntity>, Indexes<SampleEntity>>();
             container.RegisterSingleton<IIndexes<Camera>, Indexes<Camera>>();
             container.RegisterSingleton<IIndexes<Info>, Indexes<Info>>();
+            container.RegisterSingleton<IIndexes<Feedback>, Indexes<Feedback>>();
             container.RegisterSingleton<IEntityService<ApiSample, SampleEntity>, EntityService<ApiSample, SampleEntity>>();
             container.RegisterSingleton<IMapper<ApiSample, SampleEntity>, Mapper<ApiSample, SampleEntity>>();
             container.RegisterSingleton<IInfoUpdater, InfoUpdater>();

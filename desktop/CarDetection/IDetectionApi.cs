@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Refit;
 
 namespace CarDetection
@@ -7,5 +8,8 @@ namespace CarDetection
     {
         [Put("/api/camera")]
         Task<Camera> PutCameraAsync(Camera camera);
+
+        [Get("/api/feedback")]
+        Task<IList<Feedback>> GetAllFeedbacksAsync();
     }
 }
