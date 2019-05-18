@@ -78,6 +78,7 @@ class CamViewController: UIViewController {
     textView.translatesAutoresizingMaskIntoConstraints = false
     let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 44))
     toolbar.items = [
+      UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelFeedback)),
       UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
       UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(sendFeedback))]
     textView.inputAccessoryView = toolbar
@@ -99,6 +100,18 @@ class CamViewController: UIViewController {
     })
   }
 
+  @objc func cancelFeedback() {
+    feedbackView?.superview?.removeFromSuperview()
+  }
+
+  struct Feedback: Encodable {
+    let title: String
+    let text: String
+    let cameraNumber: Int
+    let x: Int?
+    let y: Int?
+  }
+
   @objc private func sendFeedback() {
     guard let message = feedbackView?.text else {
       return
@@ -107,7 +120,14 @@ class CamViewController: UIViewController {
 
     var request = URLRequest(url: Constants.baseURL.appendingPathComponent("feedback"))
     request.httpMethod = "POST"
-    request.httpBody = message.data(using: .utf8)
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    formatter.timeStyle = .short
+    let feedback = Feedback(title: "Отзыв \(formatter.string(from: Date()))",
+      text: message,
+      cameraNumber: camId, x: 0, y: 0)
+    request.httpBody = try? JSONEncoder().encode(feedback)
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     URLSession.shared.dataTask(with: request).resume()
   }
 
