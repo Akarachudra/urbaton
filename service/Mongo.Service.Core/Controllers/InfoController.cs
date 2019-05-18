@@ -24,6 +24,7 @@ namespace Mongo.Service.Core.Controllers
             return infos.Select(
                 x => new ApiInfo
                 {
+                    Description = x.Description,
                     CameraNumber = x.CameraNumber,
                     FreePlaces = x.FreePlaces,
                     OccupiedPlaces = x.OccupiedPlaces,

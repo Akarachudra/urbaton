@@ -44,6 +44,7 @@ namespace Mongo.Service.Core
                                     ApplyGrayFilter(bmp);
                                     var info = DrawPlaces(graphics, bmp, camera.Places);
                                     info.CameraNumber = camera.Number;
+                                    info.Description = camera.Description;
                                     lock (Cache.Locker)
                                     {
                                         image.Save($"{camera.Number}.jpg", ImageFormat.Jpeg);
