@@ -4,8 +4,6 @@
     {
         public int CameraNumber { get; set; }
 
-        public string Description { get; set; }
-
         public int TotalPlaces { get; set; }
 
         public int FreePlaces { get; set; }

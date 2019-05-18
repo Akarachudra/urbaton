@@ -1,4 +1,5 @@
-﻿using Kontur.Configuration;
+﻿using System;
+using Kontur.Configuration;
 using Mongo.Service.Core.WebApp;
 using Topshelf;
 

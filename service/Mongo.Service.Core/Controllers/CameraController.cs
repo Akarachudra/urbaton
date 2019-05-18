@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Mongo.Service.Core.Storable;
@@ -29,6 +33,37 @@ namespace Mongo.Service.Core.Controllers
                 });
         }
 
+        [HttpGet]
+        [Route("api/camera/file/{id}")]
+        public HttpResponseMessage GetCameraFile(int id)
+        {
+            var path = $"{id}.jpg";
+            if (!File.Exists(path))
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
+            lock (Cache.Locker)
+            {
+                using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        stream.CopyTo(ms);
+                        result.Content = new ByteArrayContent(ms.ToArray());
+                        result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                        {
+                            FileName = path
+                        };
+
+                        result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                        return result;
+                    }
+                }
+            }
+        }
+
         [HttpPut]
         public async Task PutAsync(ApiCamera apiCamera)
         {
@@ -46,7 +81,10 @@ namespace Mongo.Service.Core.Controllers
 
             camera.Places = places;
             await this.cameraRepository.WriteAsync(camera).ConfigureAwait(false);
-            Cache.Cameras[camera.Number] = camera;
+            lock (Cache.Locker)
+            {
+                Cache.Cameras[camera.Number] = camera;
+            }
         }
     }
 }
