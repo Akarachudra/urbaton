@@ -1,0 +1,30 @@
+
+/* Class = "UILabel"; text = "-"; ObjectID = "1zI-5I-R0s"; */
+"1zI-5I-R0s.text" = "-";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "4Vh-Ti-XRD"; */
+"4Vh-Ti-XRD.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Уведомлять о свободных местах"; ObjectID = "7XC-QY-cyd"; */
+"7XC-QY-cyd.normalTitle" = "Уведомлять о свободных местах";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "9fc-fS-hw4"; */
+"9fc-fS-hw4.text" = "-";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "CKM-qa-y2q"; */
+"CKM-qa-y2q.text" = "-";
+
+/* Class = "UIButton"; normalTitle = "Смотреть камеру"; ObjectID = "ISN-B8-MM1"; */
+"ISN-B8-MM1.normalTitle" = "Смотреть камеру";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "OzV-mI-hGr"; */
+"OzV-mI-hGr.text" = "-";
+
+/* Class = "UILabel"; text = "Всего: -"; ObjectID = "bUW-Yt-iug"; */
+"bUW-Yt-iug.text" = "Всего: -";
+
+/* Class = "UILabel"; text = "Система будет отправлять уведомления о свободных местах в течение часа"; ObjectID = "glp-kf-xaH"; */
+"glp-kf-xaH.text" = "Система будет отправлять уведомления о свободных местах в течение часа";
+
+/* Class = "UILabel"; text = "Всего -"; ObjectID = "tka-9H-nRr"; */
+"tka-9H-nRr.text" = "Всего -";

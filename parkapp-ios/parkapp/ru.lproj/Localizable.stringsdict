@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>places_vacant</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@places@</string>
+		<key>places</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>нет свободных мест</string>
+			<key>one</key>
+			<string>одно свободное место</string>
+			<key>few</key>
+			<string>%d свободных места</string>
+			<key>many</key>
+			<string>%d свободных мест</string>
+		</dict>
+	</dict>
+	<key>places_occupied</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@places@</string>
+		<key>places</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>все места свободны</string>
+			<key>one</key>
+			<string>одно место занято</string>
+			<key>few</key>
+			<string>%d занятых места</string>
+			<key>many</key>
+			<string>%d занятых мест</string>
+		</dict>
+	</dict>
+	<key>places_total</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@places@</string>
+		<key>places</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Похоже это не парковка</string>
+			<key>one</key>
+			<string>Всего одно парковочное место</string>
+			<key>few</key>
+			<string>Всего: %d места</string>
+			<key>many</key>
+			<string>Всего: %d мест</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
