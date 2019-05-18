@@ -9,11 +9,11 @@ namespace Mongo.Service.Core.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminController : ControllerBase
+    public class CameraController : ControllerBase
     {
         private readonly IMongoRepository<Camera> cameraRepository;
 
-        public AdminController(IMongoRepository<Camera> cameraRepository)
+        public CameraController(IMongoRepository<Camera> cameraRepository)
         {
             this.cameraRepository = cameraRepository;
         }

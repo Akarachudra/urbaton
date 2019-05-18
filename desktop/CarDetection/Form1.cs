@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AForge;
 using AForge.Imaging.Filters;
 using AForge.Video;
 using Newtonsoft.Json;
+using Refit;
 using Point = System.Drawing.Point;
 
 namespace CarDetection
@@ -18,10 +20,12 @@ namespace CarDetection
         private NewFrameEventHandler frameHandler;
         private JPEGStream videoSource;
         private readonly object locker = new object();
+        private readonly IDetectionApi detectionApi;
 
         public Form1()
         {
             InitializeComponent();
+            this.detectionApi = RestService.For<IDetectionApi>("http://localhost:4444");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -236,6 +240,26 @@ namespace CarDetection
 
                 RefreshPlaces();
             }
+        }
+
+        private void sendToServer_Click(object sender, EventArgs e)
+        {
+            IList<Place> placesCopy;
+            lock (this.locker)
+            {
+                placesCopy = new List<Place>(DataCache.Places.Count);
+                foreach (var place in DataCache.Places)
+                {
+                    placesCopy.Add(place);
+                }
+            }
+
+            this.detectionApi.PutCameraAsync(
+                new Camera
+                {
+                    Number = 1,
+                    Places = placesCopy
+                }).Wait();
         }
     }
 }

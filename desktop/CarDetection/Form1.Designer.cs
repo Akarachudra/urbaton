@@ -141,6 +141,7 @@
             this.sendToServer.TabIndex = 6;
             this.sendToServer.Text = "Send to server";
             this.sendToServer.UseVisualStyleBackColor = true;
+            this.sendToServer.Click += new System.EventHandler(this.sendToServer_Click);
             // 
             // Form1
             // 
