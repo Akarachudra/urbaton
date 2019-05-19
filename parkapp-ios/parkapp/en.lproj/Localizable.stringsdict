@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>places_vacant</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@places@</string>
+		<key>places</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>no vacant places</string>
+			<key>one</key>
+			<string>one vacant place</string>
+			<key>two</key>
+			<string>%d places are vacant</string>
+			<key>few</key>
+			<string>%d places are vacant</string>
+			<key>other</key>
+			<string>%d places are vacant</string>
+		</dict>
+	</dict>
+	<key>places_occupied</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@places@</string>
+		<key>places</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>all places are occupied</string>
+			<key>one</key>
+			<string>one place is occupied</string>
+			<key>two</key>
+			<string>%d places are occupied</string>
+			<key>few</key>
+			<string>%d places are occupied</string>
+			<key>other</key>
+			<string>%d places are occupied</string>
+		</dict>
+	</dict>
+	<key>places_total</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@places@</string>
+		<key>places</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>It seems that this is not a parking lot.</string>
+			<key>one</key>
+			<string>Only one place.</string>
+			<key>two</key>
+			<string>Total: %d places.</string>
+			<key>few</key>
+			<string>Total: %d places.</string>
+			<key>other</key>
+			<string>Total: %d places.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

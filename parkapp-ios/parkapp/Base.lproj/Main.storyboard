@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Parkings List View Controller-->
+        <!--Парковки рядом-->
         <scene sceneID="z88-il-5dr">
             <objects>
                 <tableViewController id="msy-vg-eHD" customClass="ParkingsListViewController" customModule="parkapp" customModuleProvider="target" sceneMemberID="viewController">
@@ -28,7 +28,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Vh-Ti-XRD">
                                             <rect key="frame" x="20" y="11" width="246" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -47,7 +47,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C6v-GC-Nzq">
-                                            <rect key="frame" x="72" y="47" width="12" height="12"/>
+                                            <rect key="frame" x="80" y="47" width="12" height="12"/>
                                             <color key="backgroundColor" red="0.84706930051813467" green="0.27211329800277367" blue="0.28173826446553679" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="7rH-Rf-9PR"/>
@@ -55,7 +55,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKM-qa-y2q">
-                                            <rect key="frame" x="92" y="42.5" width="8" height="21"/>
+                                            <rect key="frame" x="100" y="42.5" width="8" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -75,12 +75,12 @@
                                         <constraint firstItem="tka-9H-nRr" firstAttribute="centerY" secondItem="CKM-qa-y2q" secondAttribute="centerY" id="9Gh-V4-ajm"/>
                                         <constraint firstItem="xho-bW-Uhy" firstAttribute="top" secondItem="4Vh-Ti-XRD" secondAttribute="bottom" constant="14" id="RAr-Tp-UZ6"/>
                                         <constraint firstItem="C6v-GC-Nzq" firstAttribute="top" secondItem="4Vh-Ti-XRD" secondAttribute="bottom" constant="15" id="Swu-Ia-tZg"/>
+                                        <constraint firstItem="C6v-GC-Nzq" firstAttribute="leading" secondItem="ZIR-eT-Xbe" secondAttribute="leading" constant="80" id="WSf-hW-PSG"/>
                                         <constraint firstItem="CKM-qa-y2q" firstAttribute="centerY" secondItem="C6v-GC-Nzq" secondAttribute="centerY" id="Y91-zx-DQu"/>
                                         <constraint firstItem="CKM-qa-y2q" firstAttribute="leading" secondItem="C6v-GC-Nzq" secondAttribute="trailing" constant="8" id="boM-qu-Dcp"/>
                                         <constraint firstItem="4Vh-Ti-XRD" firstAttribute="leading" secondItem="ZIR-eT-Xbe" secondAttribute="leading" constant="20" id="dDP-cv-y5I"/>
                                         <constraint firstAttribute="trailing" secondItem="4Vh-Ti-XRD" secondAttribute="trailing" constant="20" id="dKL-w8-Gpr"/>
                                         <constraint firstItem="xho-bW-Uhy" firstAttribute="leading" secondItem="ZIR-eT-Xbe" secondAttribute="leading" constant="20" id="k0V-Dd-SL9"/>
-                                        <constraint firstItem="C6v-GC-Nzq" firstAttribute="leading" secondItem="OzV-mI-hGr" secondAttribute="trailing" constant="24" id="kMC-kk-084"/>
                                         <constraint firstItem="OzV-mI-hGr" firstAttribute="centerY" secondItem="xho-bW-Uhy" secondAttribute="centerY" id="paz-iT-C15"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -100,7 +100,7 @@
                             <outlet property="delegate" destination="msy-vg-eHD" id="R2G-Jx-q7J"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Q8g-xK-lFI"/>
+                    <navigationItem key="navigationItem" title="Парковки рядом" id="Q8g-xK-lFI"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wnh-29-K3K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -141,8 +141,8 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSr-aK-zEV">
-                                                    <rect key="frame" x="88" y="24.5" width="212" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="88" y="25" width="212" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -173,7 +173,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Umi-Jk-vz0">
-                                                    <rect key="frame" x="88" y="24.5" width="212" height="20.5"/>
+                                                    <rect key="frame" x="88" y="25" width="212" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -197,8 +197,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Всего: -" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asG-dX-WSh">
-                                                    <rect key="frame" x="44" y="21.5" width="232" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <rect key="frame" x="44" y="22" width="232" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -226,7 +226,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-0o-Bz5">
-                                                    <rect key="frame" x="97" y="27" width="126" height="30"/>
+                                                    <rect key="frame" x="97" y="27.5" width="126" height="30"/>
                                                     <state key="normal" title="Смотреть камеру"/>
                                                     <connections>
                                                         <segue destination="bNA-BE-U8C" kind="show" identifier="showCam" id="kDq-53-yjr"/>

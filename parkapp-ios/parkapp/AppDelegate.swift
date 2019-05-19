@@ -21,7 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     CamsRepo.shared.startPolling()
+    UserDefaults.standard.set(["ru_RU"], forKey: "AppleLanguages")
     UNUserNotificationCenter.current().delegate = self
+
     return true
   }
 
