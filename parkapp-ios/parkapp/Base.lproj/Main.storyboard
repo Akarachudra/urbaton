@@ -124,6 +124,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="AUE-6d-j44">
                                         <rect key="frame" x="0.0" y="60" width="320" height="70"/>
@@ -156,6 +157,7 @@
                                                 <constraint firstItem="IiT-qa-NRT" firstAttribute="leading" secondItem="mw3-wu-HxT" secondAttribute="leading" constant="44" id="dZ3-xx-Gym"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="l0w-VN-9Bb">
                                         <rect key="frame" x="0.0" y="130" width="320" height="70"/>
@@ -188,6 +190,7 @@
                                                 <constraint firstItem="HWf-kT-BOs" firstAttribute="centerY" secondItem="0WO-x5-b85" secondAttribute="centerY" id="eUB-je-YO7"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="64" id="bwY-qJ-3U9">
                                         <rect key="frame" x="0.0" y="200" width="320" height="64"/>
@@ -209,6 +212,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="asG-dX-WSh" secondAttribute="trailing" constant="44" id="TYo-R4-bEh"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="aSq-sc-nR4">
                                         <rect key="frame" x="0.0" y="264" width="320" height="60"/>
@@ -217,6 +221,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="85" id="0KM-WS-IiN">
                                         <rect key="frame" x="0.0" y="324" width="320" height="85"/>
@@ -227,6 +232,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-0o-Bz5">
                                                     <rect key="frame" x="97" y="27.5" width="126" height="30"/>
+                                                    <color key="tintColor" red="0.14999437330000001" green="0.1900534928" blue="0.92162269350000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <state key="normal" title="Смотреть камеру"/>
                                                     <connections>
                                                         <segue destination="bNA-BE-U8C" kind="show" identifier="showCam" id="kDq-53-yjr"/>
@@ -238,6 +244,7 @@
                                                 <constraint firstItem="pT6-0o-Bz5" firstAttribute="centerX" secondItem="JaW-qL-X3C" secondAttribute="centerX" id="qBn-7K-lvd"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="IeN-YE-BJn">
                                         <rect key="frame" x="0.0" y="409" width="320" height="44"/>
@@ -246,6 +253,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="rSh-uK-VA2">
                                         <rect key="frame" x="0.0" y="453" width="320" height="100"/>
@@ -256,6 +264,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcx-vP-eUq">
                                                     <rect key="frame" x="42.5" y="8" width="235" height="30"/>
+                                                    <color key="tintColor" red="0.14999437330000001" green="0.1900534928" blue="0.92162269350000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <state key="normal" title="Уведомлять о свободных местах"/>
                                                     <connections>
                                                         <action selector="notifyVacant:" destination="MnG-HF-6tM" eventType="touchUpInside" id="2tT-h7-91s"/>
@@ -276,6 +285,7 @@
                                                 <constraint firstItem="tcx-vP-eUq" firstAttribute="centerX" secondItem="qys-ir-9YS" secondAttribute="centerX" id="yMB-G2-nO9"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -323,7 +333,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                         <constraints>
                             <constraint firstItem="QQV-96-flB" firstAttribute="top" secondItem="wOO-6N-0U5" secondAttribute="top" id="1A2-Th-foD"/>
                             <constraint firstItem="wOO-6N-0U5" firstAttribute="bottom" secondItem="LUY-8J-liu" secondAttribute="bottom" constant="100" id="Hvs-1M-jfV"/>
@@ -350,6 +360,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XbS-Ae-jmJ">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.75500559810000001" green="0.83595389129999997" blue="0.98825579880000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.1499943733215332" green="0.19005349278450012" blue="0.92162269353866577" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

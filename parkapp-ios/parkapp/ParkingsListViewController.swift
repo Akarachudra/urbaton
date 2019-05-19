@@ -8,6 +8,12 @@
 
 import UIKit
 
+func errorAlert() -> UIAlertController {
+  let alert = UIAlertController(title: "Ошибка", message: "Что-то пошло не так.", preferredStyle: .alert)
+  alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+  return alert
+}
+
 class ParkingsListViewController: UITableViewController {
 
   let parkings = CamsRepo.shared
@@ -28,16 +34,17 @@ class ParkingsListViewController: UITableViewController {
           self.updateState()
     }))
 
+    disposer.append(NotificationCenter.default
+      .addObserver(forName: CamsRepo.failedLoad, object: CamsRepo.shared, queue: OperationQueue.main, using: { (_) in
+        self.present(errorAlert(), animated: true, completion: nil)
+      }))
+
     tableView.refreshControl = UIRefreshControl()
     tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
   }
 
   func updateState() {
-//    if parkings.isFailed {
-//      //TODO: show error
-//    } else {
-      tableView.reloadData()
-//    }
+    tableView.reloadData()
   }
 
   @objc private func refresh() {
