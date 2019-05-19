@@ -19,10 +19,28 @@ class CamViewController: UIViewController {
 
   var camId: Int!
   private var zoomingDelegate: ZoomingDelegate?
+  private var diffObserver: NSObjectProtocol?
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    loadImage()
+
+    diffObserver =
+      NotificationCenter.default
+        .addObserver(forName: CamsRepo.diff,
+                     object: CamsRepo.shared,
+                     queue: OperationQueue.main) { [unowned self] (ntf) in
+                      guard let diffIds = ntf.userInfo?["ids"] as? [Int] else { return }
+                      if diffIds.contains(self.camId) {
+                        self.loadImage()
+                      }
+    }
+
+    self.loadImage()
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    NotificationCenter.default.removeObserver(diffObserver!)
   }
 
   func loadImage() {
@@ -52,12 +70,18 @@ class CamViewController: UIViewController {
     }
   }
 
+  private var imageView: UIImageView?
+
   func placeImage(image: UIImage) {
     DispatchQueue.main.async {
-      let imageView = UIImageView(image: image)
-      self.zoomingDelegate = ZoomingDelegate(view: imageView)
+      if self.imageView == nil {
+        self.imageView = UIImageView(image: image)
+      } else {
+        self.imageView?.image = image
+      }
+      self.zoomingDelegate = ZoomingDelegate(view: self.imageView!)
       self.scrollView.delegate = self.zoomingDelegate
-      self.scrollView.addSubview(imageView)
+      self.scrollView.addSubview(self.imageView!)
       self.scrollView.zoomScale = 0.6
     }
   }

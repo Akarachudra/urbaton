@@ -15,6 +15,8 @@ class ViewController: UIViewController {
   @IBOutlet weak var occupiedLabel: UILabel!
   @IBOutlet weak var totalLabel: UILabel!
 
+  private var diffObserver: NSObjectProtocol?
+
   var parking: Parking!
 
   override func viewDidLoad() {
@@ -22,6 +24,23 @@ class ViewController: UIViewController {
     vacantMarker.layer.cornerRadius = vacantMarker.bounds.height/2.0
     occupiedMarker.layer.cornerRadius = occupiedMarker.bounds.height/2.0
 
+    update()
+
+    diffObserver =
+      NotificationCenter.default
+        .addObserver(forName: CamsRepo.diff,
+                     object: CamsRepo.shared,
+                     queue: OperationQueue.main) { [unowned self] (ntf) in
+                      guard let diffIds = ntf.userInfo?["ids"] as? [Int] else { return }
+                      if diffIds.contains(self.parking.number) {
+
+                      }
+    }
+  }
+
+  private func update() {
+    let currentId = parking.number
+    parking = CamsRepo.shared.list.first(where: { $0.number == currentId })
     title = parking.title
     vacantLabel.text = String(format: NSLocalizedString("places_vacant", comment: ""), parking.vacant)
     occupiedLabel.text = String(format: NSLocalizedString("places_occupied", comment: ""), parking.occupied)

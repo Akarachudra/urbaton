@@ -8,82 +8,40 @@
 
 import UIKit
 
-struct Parking: Decodable {
-  let number: Int
-  let title: String
-  let total: Int
-  let vacant: Int
-  let occupied: Int
-
-  enum CodingKeys: String, CodingKey {
-    case number = "CameraNumber"
-    case title = "Description"
-    case total = "TotalPlaces"
-    case vacant = "FreePlaces"
-    case occupied = "OccupiedPlaces"
-  }
-}
-
-class ParkingsRepo {
-  private(set) var list = [Parking]()
-  private(set) var isFailed = false
-
-  var onLoaded: (() -> Void)?
-
-  func load() {
-    let cameras = Constants.baseURL.appendingPathComponent("info")
-    URLSession.shared.dataTask(with: cameras) { (data, response, error) in
-      defer {
-        self.onLoaded?()
-      }
-
-      if error != nil {
-        self.isFailed = true
-        return
-      }
-
-      guard let data = data else {
-        self.isFailed = true
-        return
-      }
-
-      if let listItems = try? JSONDecoder().decode([Parking].self, from: data) {
-        self.list = listItems
-      } else {
-        self.isFailed = true
-      }
-    }.resume()
-  }
-}
-
 class ParkingsListViewController: UITableViewController {
 
-  let parkings = ParkingsRepo()
+  let parkings = CamsRepo.shared
+  private var disposer = [AnyObject]()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    parkings.onLoaded = { [unowned self] in
-      DispatchQueue.main.async {
-        self.tableView.refreshControl?.endRefreshing()
-        self.updateState()
-      }
-    }
-    parkings.load()
+    disposer.append(
+      NotificationCenter.default
+        .addObserver(forName: CamsRepo.allLoaded, object: CamsRepo.shared, queue: OperationQueue.main) { (_) in
+          self.tableView.refreshControl?.endRefreshing()
+          self.updateState()
+      })
+    disposer.append(
+      NotificationCenter.default
+        .addObserver(forName: CamsRepo.diff, object: CamsRepo.shared, queue: OperationQueue.main, using: { (_) in
+          self.updateState()
+    }))
+
     tableView.refreshControl = UIRefreshControl()
     tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
   }
 
   func updateState() {
-    if parkings.isFailed {
-      //TODO: show error
-    } else {
+//    if parkings.isFailed {
+//      //TODO: show error
+//    } else {
       tableView.reloadData()
-    }
+//    }
   }
 
   @objc private func refresh() {
-    parkings.load()
+    parkings.refresh()
   }
 
   // MARK: - Table view data source
