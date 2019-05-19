@@ -153,7 +153,7 @@
             this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(739, 106);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(273, 292);
+            this.listBox1.Size = new System.Drawing.Size(273, 372);
             this.listBox1.TabIndex = 2;
             this.listBox1.Click += new System.EventHandler(this.listBox1_Click);
             // 
@@ -163,16 +163,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox2.FormattingEnabled = true;
             this.listBox2.ItemHeight = 16;
-            this.listBox2.Location = new System.Drawing.Point(739, 404);
+            this.listBox2.Location = new System.Drawing.Point(739, 484);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(273, 244);
+            this.listBox2.Size = new System.Drawing.Size(273, 164);
             this.listBox2.TabIndex = 3;
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 5000;
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
@@ -186,7 +186,7 @@
             this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Admin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

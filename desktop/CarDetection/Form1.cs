@@ -35,6 +35,7 @@ namespace CarDetection
 
             comboBox1.SelectedIndex = 0;
             SetCamera(0);
+            RefreshFeedbacks();
         }
 
         private void SetCamera(int index)
@@ -228,6 +229,7 @@ namespace CarDetection
                          });
 
                 RefreshPlaces();
+                listBox1.SelectedIndex = listBox1.Items.Count - 1;
             }
         }
 
@@ -253,18 +255,26 @@ namespace CarDetection
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            var feedbacks = this.detectionApi.GetAllFeedbacksAsync().Result;
-            Cache.Feedbacks = feedbacks;
-            listBox2.Items.Clear();
-            foreach (var feedback in feedbacks)
-            {
-                var title = feedback.Title;
-                if (string.IsNullOrWhiteSpace(feedback.Title))
-                {
-                    title = "<NO TITLE>";
-                }
+            RefreshFeedbacks();
+        }
 
-                listBox2.Items.Add(title);
+        private void RefreshFeedbacks()
+        {
+            var feedbacks = this.detectionApi.GetAllFeedbacksAsync().Result;
+            if (Cache.Feedbacks != null && Cache.Feedbacks.Count != feedbacks.Count)
+            {
+                Cache.Feedbacks = feedbacks;
+                listBox2.Items.Clear();
+                foreach (var feedback in feedbacks)
+                {
+                    var title = feedback.Title;
+                    if (string.IsNullOrWhiteSpace(feedback.Title))
+                    {
+                        title = "<NO TITLE>";
+                    }
+
+                    listBox2.Items.Add(title);
+                }
             }
         }
 
