@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
   @IBOutlet weak var vacantMarker: UIView!
   @IBOutlet weak var occupiedMarker: UIView!
   @IBOutlet weak var vacantLabel: UILabel!
   @IBOutlet weak var occupiedLabel: UILabel!
   @IBOutlet weak var totalLabel: UILabel!
-
+  @IBOutlet weak var notifyButton: UIButton!
+  
   private var diffObserver: NSObjectProtocol?
 
   var parking: Parking!
@@ -33,9 +34,13 @@ class ViewController: UIViewController {
                      queue: OperationQueue.main) { [unowned self] (ntf) in
                       guard let diffIds = ntf.userInfo?["ids"] as? [Int] else { return }
                       if diffIds.contains(self.parking.number) {
-
+                        self.update()
                       }
     }
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(diffObserver)
   }
 
   private func update() {
@@ -45,9 +50,20 @@ class ViewController: UIViewController {
     vacantLabel.text = String(format: NSLocalizedString("places_vacant", comment: ""), parking.vacant)
     occupiedLabel.text = String(format: NSLocalizedString("places_occupied", comment: ""), parking.occupied)
     totalLabel.text = String(format: NSLocalizedString("places_total", comment: ""), parking.total)
+    var title = "Уведомлять о свободных местах"
+    if CamsRepo.shared.notifyIds.contains(parking.number) {
+      title = "Отписаться от уведомлений"
+    }
+    notifyButton.setTitle(title, for: .normal)
   }
 
   @IBAction func notifyVacant(_ sender: Any) {
+    if CamsRepo.shared.notifyIds.contains(parking.number) {
+      CamsRepo.shared.unsubscribe(camId: parking.number)
+    } else {
+      CamsRepo.shared.subscribe(camId: parking.number)
+    }
+    update()
   }
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -56,5 +72,17 @@ class ViewController: UIViewController {
       camVc.camId = parking.number
     }
   }
+
+  func setupStandalone() {
+    navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
+                                                       target: self,
+                                                       action: #selector(close))
+  }
+
+  @objc func close() {
+    dismiss(animated: true, completion: nil)
+  }
+
+
 }
 

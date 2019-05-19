@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 struct Parking: Decodable, Equatable {
   let number: Int
@@ -31,9 +32,11 @@ struct Parking: Decodable, Equatable {
 
 class CamsRepo: NSObject {
   static let shared = CamsRepo()
-
   private var timer: Timer?
+  private(set) var notifyIds = Set<Int>()
+
   func startPolling() {
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (_, _) in }
     timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [unowned self] (_) in
       self.loadCams()
     })
@@ -46,6 +49,14 @@ class CamsRepo: NSObject {
 
   func refresh() {
     loadCams()
+  }
+
+  func subscribe(camId: Int) {
+    notifyIds.insert(camId)
+  }
+
+  func unsubscribe(camId: Int) {
+    notifyIds.remove(camId)
   }
 
   private func loadCams() {
@@ -71,7 +82,7 @@ class CamsRepo: NSObject {
       } else {
         self.postFailed()
       }
-      }.resume()
+    }.resume()
   }
 
   private func diff(current: [Parking], new: [Parking]) {
@@ -79,12 +90,44 @@ class CamsRepo: NSObject {
       postDiff(camIds: new.map({ $0.number }))
       return
     }
-    var diff = [Parking]()
+    var diff = [Int]()
     for (index, _) in current.enumerated() {
       guard current[index].number == new[index].number else { continue }
       if current[index] != new[index] {
-        diff.append(new[index])
+        diff.append(new[index].number)
       }
+    }
+
+    if !diff.isEmpty {
+      notifyIds.intersection(diff).forEach({ id in
+        self.sendNotification(camId: id)
+      })
+      postDiff(camIds: diff)
+    }
+  }
+
+  private func sendNotification(camId: Int) {
+    UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+      guard settings.authorizationStatus == .authorized else {
+        self.unsubscribe(camId: camId)
+        return
+      }
+
+      let content = UNMutableNotificationContent()
+      let parking = self.list.first(where: { $0.number == camId })?.title ?? ""
+      content.title = parking
+      content.body = "Освободилось место!"
+      content.sound = UNNotificationSound.default
+      content.userInfo = ["id": camId]
+
+      UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: "park-\(camId)",
+                                                                   content: content,
+                                                                   trigger: nil),
+                                             withCompletionHandler: { error in
+                                              if error != nil {
+                                                print("error add notification", error)
+                                              }
+      })
     }
   }
 

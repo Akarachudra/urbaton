@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 struct Constants {
   static let baseURL = URL(string: "http://10.33.102.133:12512/api")!
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     CamsRepo.shared.startPolling()
+    UNUserNotificationCenter.current().delegate = self
     return true
   }
 
@@ -45,6 +47,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
   }
 
-
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    completionHandler([.alert, .sound])
+  }
+
+  func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    defer { completionHandler() }
+    guard let id = response.notification.request.content.userInfo["id"] as? Int else { return }
+
+    let details = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "details") as! ViewController
+    details.parking = CamsRepo.shared.list.first(where: { $0.number == id })!
+    let navWrap = UINavigationController(rootViewController: details)
+    details.setupStandalone()
+
+    (window?.rootViewController as? UINavigationController)?.topViewController?.present(navWrap, animated: true, completion: nil)
+  }
+}
