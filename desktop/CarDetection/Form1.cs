@@ -39,8 +39,14 @@ namespace CarDetection
 
         private void SetCamera(int index)
         {
+            if (videoSource != null)
+            {
+                videoSource.Stop();
+                videoSource.NewFrame -= frameHandler;
+            }
+
             var camera = Cache.Cameras[index];
-            videoSource?.Stop();
+
             videoSource = new JPEGStream(camera.Url);
 
             frameHandler = new NewFrameEventHandler(video_NewFrame);
@@ -65,77 +71,85 @@ namespace CarDetection
             var img = grayscale.Apply(frame);
 
             //do processing here
-            using (var graphics = pictureBox1.CreateGraphics())
-            {
-                graphics.DrawImage(img, new Point(0, 0));
-                this.pictureBox1.Invoke(
-                    (MethodInvoker)delegate
+
+            this.pictureBox1.Invoke(
+                (MethodInvoker)delegate
+                {
+                    lock (locker)
                     {
                         // Running on the UI thread
-                        this.pictureBox1.Width = img.Width;
-                        this.pictureBox1.Height = img.Height;
-                        this.Height = this.pictureBox1.Height + 100;
-                        this.Width = this.pictureBox1.Width + this.listBox1.Width;
-                        DrawPlaces(graphics, img);
-                    });
-            }
+                        try
+                        {
+                            this.pictureBox1.Width = img.Width;
+                            this.pictureBox1.Height = img.Height;
+                            this.Height = this.pictureBox1.Height + 100;
+                            this.Width = this.pictureBox1.Width + this.listBox1.Width;
+                            using (var graphics = pictureBox1.CreateGraphics())
+                            {
+                                graphics.DrawImage(img, new Point(0, 0));
+                                DrawPlaces(graphics, img);
+                            }
+                        }
+                        catch
+                        {
+                            // ignore
+                        }
+                    }
+                });
         }
 
         private void DrawPlaces(Graphics graphics, Bitmap grayBmp)
         {
-            lock (locker)
+            var index = -1;
+            foreach (var place in Cache.Cameras[cameraIndex].Places)
             {
-                var index = -1;
-                foreach (var place in Cache.Cameras[cameraIndex].Places)
+                index++;
+                var count = 0;
+                long pixelsSummaryColor = 0;
+                for (var i = place.X; i <= place.X + place.Width; i++)
                 {
-                    index++;
-                    var count = 0;
-                    long pixelsSummaryColor = 0;
-                    for (var i = place.X; i <= place.X + place.Width; i++)
+                    for (var j = place.Y; j <= place.Y + place.Height; j++)
                     {
-                        for (var j = place.Y; j <= place.Y + place.Height; j++)
-                        {
-                            count++;
-                            var pixel = grayBmp.GetPixel(i, j);
-                            pixelsSummaryColor += pixel.ToArgb();
-                        }
+                        count++;
+                        var pixel = grayBmp.GetPixel(i, j);
+                        pixelsSummaryColor += pixel.ToArgb();
                     }
-
-                    var mediumColor = pixelsSummaryColor / count;
-                    const int colorDelta = 1500000;
-                    var closeCount = 0;
-                    for (var i = place.X; i <= place.X + place.Width; i++)
-                    {
-                        for (var j = place.Y; j <= place.Y + place.Height; j++)
-                        {
-                            var pixel = grayBmp.GetPixel(i, j).ToArgb();
-                            if (Math.Abs(mediumColor - pixel) < colorDelta)
-                            {
-                                closeCount++;
-                            }
-                        }
-                    }
-
-                    var percent = (double)closeCount / count * 100;
-                    var pen = new Pen(Color.Chartreuse, 2);
-                    if (percent < 90)
-                    {
-                        pen = new Pen(Color.Red, 2);
-                    }
-
-                    if (listBox1.SelectedIndex == index)
-                    {
-                        pen = new Pen(Color.DodgerBlue, 3);
-                    }
-
-                    graphics.DrawRectangle(pen, new Rectangle(place.X, place.Y, place.Width, place.Height));
-                    graphics.DrawString(
-                        percent.ToString("0.##"),
-                        new Font(FontFamily.GenericMonospace, 10.0f),
-                        new SolidBrush(Color.Aqua),
-                        place.X + place.Width / 2,
-                        place.Y + place.Height / 2);
                 }
+
+                var mediumColor = pixelsSummaryColor / count;
+                const int colorDelta = 1500000;
+                var closeCount = 0;
+                for (var i = place.X; i <= place.X + place.Width; i++)
+                {
+                    for (var j = place.Y; j <= place.Y + place.Height; j++)
+                    {
+                        var pixel = grayBmp.GetPixel(i, j).ToArgb();
+                        if (Math.Abs(mediumColor - pixel) < colorDelta)
+                        {
+                            closeCount++;
+                        }
+                    }
+                }
+
+                var percent = (double)closeCount / count * 100;
+                var pen = new Pen(Color.Chartreuse, 2);
+                if (percent < 90)
+                {
+                    pen = new Pen(Color.Red, 2);
+                }
+
+                if (listBox1.SelectedIndex == index)
+                {
+                    pen = new Pen(Color.DodgerBlue, 3);
+                }
+
+                graphics.DrawRectangle(pen, new Rectangle(place.X, place.Y, place.Width, place.Height));
+                graphics.DrawString(
+                    percent.ToString("0.##"),
+                    new Font(FontFamily.GenericMonospace, 10.0f),
+                    new SolidBrush(Color.Aqua),
+                    place.X + place.Width / 2,
+                    place.Y + place.Height / 2);
             }
         }
 
