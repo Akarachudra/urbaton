@@ -91,7 +91,7 @@ namespace CarDetection
                             DrawPlaces(graphics, img);
                             this.pictureBox1.Image = drawingBitmap;
                         }
-                        catch (Exception e)
+                        catch
                         {
                             // ignore
                         }
@@ -296,6 +296,18 @@ namespace CarDetection
                 {
                     cameraIndex = comboBox1.SelectedIndex;
                     SetCamera(cameraIndex);
+                }
+            }
+        }
+
+        private void listBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (listBox1.SelectedIndex != -1)
+                {
+                    Cache.Cameras[cameraIndex].Places.RemoveAt(listBox1.SelectedIndex);
+                    RefreshPlaces();
                 }
             }
         }

@@ -156,6 +156,7 @@
             this.listBox1.Size = new System.Drawing.Size(273, 372);
             this.listBox1.TabIndex = 2;
             this.listBox1.Click += new System.EventHandler(this.listBox1_Click);
+            this.listBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyUp);
             // 
             // listBox2
             // 
