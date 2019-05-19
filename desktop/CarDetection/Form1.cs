@@ -14,7 +14,7 @@ namespace CarDetection
     {
         private NewFrameEventHandler frameHandler;
         private JPEGStream videoSource;
-        private int cameraIndex = 0;
+        private int cameraIndex;
         private readonly object locker = new object();
         private readonly IDetectionApi detectionApi;
 
