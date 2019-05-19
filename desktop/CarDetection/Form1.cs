@@ -84,13 +84,13 @@ namespace CarDetection
                             this.pictureBox1.Height = img.Height;
                             this.Height = this.pictureBox1.Height + 100;
                             this.Width = this.pictureBox1.Width + this.listBox1.Width;
-                            using (var graphics = pictureBox1.CreateGraphics())
-                            {
-                                graphics.DrawImage(img, new Point(0, 0));
-                                DrawPlaces(graphics, img);
-                            }
+                            var drawingBitmap = new Bitmap(img.Width, img.Height);
+                            var graphics = Graphics.FromImage(drawingBitmap);
+                            graphics.DrawImage(img, new Point(0, 0));
+                            DrawPlaces(graphics, img);
+                            this.pictureBox1.Image = drawingBitmap;
                         }
-                        catch
+                        catch (Exception e)
                         {
                             // ignore
                         }
