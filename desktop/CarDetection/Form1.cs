@@ -311,5 +311,72 @@ namespace CarDetection
                 }
             }
         }
+
+        private bool isDrawing;
+        private Point startPos;
+        private Point currentPos;
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            startPos = e.Location;
+            currentPos = e.Location;
+            if (e.Button == MouseButtons.Left)
+            {
+                isDrawing = true;
+            }
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            currentPos = e.Location;
+            if (isDrawing)
+            {
+                pictureBox1.Invalidate();
+            }
+        }
+
+        private Rectangle GetRectangle()
+        {
+            return new Rectangle(
+                Math.Min(startPos.X, currentPos.X),
+                Math.Min(startPos.Y, currentPos.Y),
+                Math.Abs(startPos.X - currentPos.X),
+                Math.Abs(startPos.Y - currentPos.Y));
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && isDrawing)
+            {
+                isDrawing = false;
+                this.pictureBox1.Invalidate();
+                var rectangle = GetRectangle();
+                lock (locker)
+                {
+                    Cache.Cameras[cameraIndex]
+                         .Places.Add(
+                             new Place
+                             {
+                                 Id = Cache.Cameras[cameraIndex].Places.Count + 1,
+                                 X = Convert.ToInt32(rectangle.X),
+                                 Y = Convert.ToInt32(rectangle.Y),
+                                 Width = Convert.ToInt32(rectangle.Width),
+                                 Height = Convert.ToInt32(rectangle.Height)
+                             });
+
+                    RefreshPlaces();
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                }
+            }
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            if (isDrawing)
+            {
+                var rectangle = GetRectangle();
+                e.Graphics.DrawRectangle(new Pen(Color.CornflowerBlue, 2), rectangle);
+            }
+        }
     }
 }
