@@ -297,6 +297,7 @@
                     </tableView>
                     <connections>
                         <outlet property="notifyButton" destination="tcx-vP-eUq" id="er4-xt-HUI"/>
+                        <outlet property="notifyHint" destination="7bm-iU-WdB" id="jVs-I7-Gps"/>
                         <outlet property="occupiedLabel" destination="Umi-Jk-vz0" id="Dco-nu-7wq"/>
                         <outlet property="occupiedMarker" destination="HWf-kT-BOs" id="wOU-yN-110"/>
                         <outlet property="totalLabel" destination="asG-dX-WSh" id="3Tf-ln-0wi"/>

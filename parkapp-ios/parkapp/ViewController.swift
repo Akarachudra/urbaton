@@ -15,7 +15,8 @@ class ViewController: UITableViewController {
   @IBOutlet weak var occupiedLabel: UILabel!
   @IBOutlet weak var totalLabel: UILabel!
   @IBOutlet weak var notifyButton: UIButton!
-  
+  @IBOutlet weak var notifyHint: UILabel!
+
   private var diffObserver: NSObjectProtocol?
 
   var parking: Parking!
@@ -50,10 +51,20 @@ class ViewController: UITableViewController {
     vacantLabel.text = String(format: NSLocalizedString("places_vacant", comment: ""), parking.vacant)
     occupiedLabel.text = String(format: NSLocalizedString("places_occupied", comment: ""), parking.occupied)
     totalLabel.text = String(format: NSLocalizedString("places_total", comment: ""), parking.total)
+    if parking.vacant > 0 {
+      notifyButton.isEnabled = false
+      notifyHint.isEnabled = false
+      CamsRepo.shared.unsubscribe(camId: currentId)
+    } else {
+      notifyButton.isEnabled = true
+      notifyHint.isEnabled = true
+    }
+
     var title = "Уведомлять о свободных местах"
     if CamsRepo.shared.notifyIds.contains(parking.number) {
       title = "Отписаться от уведомлений"
     }
+
     notifyButton.setTitle(title, for: .normal)
   }
 
