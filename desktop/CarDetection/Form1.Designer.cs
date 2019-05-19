@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.sendToServer = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
             this.heightBox = new System.Windows.Forms.TextBox();
             this.widthBox = new System.Windows.Forms.TextBox();
@@ -38,7 +40,6 @@
             this.xBox = new System.Windows.Forms.TextBox();
             this.savePlaceButton = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.sendToServer = new System.Windows.Forms.Button();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -58,6 +59,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Controls.Add(this.sendToServer);
             this.panel1.Controls.Add(this.addButton);
             this.panel1.Controls.Add(this.heightBox);
@@ -70,6 +72,25 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1012, 100);
             this.panel1.TabIndex = 1;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(484, 21);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(205, 24);
+            this.comboBox1.TabIndex = 7;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // sendToServer
+            // 
+            this.sendToServer.Location = new System.Drawing.Point(568, 64);
+            this.sendToServer.Name = "sendToServer";
+            this.sendToServer.Size = new System.Drawing.Size(131, 23);
+            this.sendToServer.TabIndex = 6;
+            this.sendToServer.Text = "Send to server";
+            this.sendToServer.UseVisualStyleBackColor = true;
+            this.sendToServer.Click += new System.EventHandler(this.sendToServer_Click);
             // 
             // addButton
             // 
@@ -136,16 +157,6 @@
             this.listBox1.TabIndex = 2;
             this.listBox1.Click += new System.EventHandler(this.listBox1_Click);
             // 
-            // sendToServer
-            // 
-            this.sendToServer.Location = new System.Drawing.Point(568, 64);
-            this.sendToServer.Name = "sendToServer";
-            this.sendToServer.Size = new System.Drawing.Size(131, 23);
-            this.sendToServer.TabIndex = 6;
-            this.sendToServer.Text = "Send to server";
-            this.sendToServer.UseVisualStyleBackColor = true;
-            this.sendToServer.Click += new System.EventHandler(this.sendToServer_Click);
-            // 
             // listBox2
             // 
             this.listBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -178,7 +189,6 @@
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -200,6 +210,7 @@
         private System.Windows.Forms.Button sendToServer;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="DataCache.cs" />
+    <Compile Include="Cache.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

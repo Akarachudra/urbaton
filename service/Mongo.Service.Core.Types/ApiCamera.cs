@@ -6,7 +6,11 @@ namespace Mongo.Service.Core.Types
     {
         private IList<ApiPlace> places;
 
+        public string Url { get; set; }
+
         public int Number { get; set; }
+
+        public string Description { get; set; }
 
         public IList<ApiPlace> Places
         {

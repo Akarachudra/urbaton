@@ -22,14 +22,25 @@ namespace Mongo.Service.Core.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ApiCameraInfo>> GetAllAsync()
+        public async Task<IEnumerable<ApiCamera>> GetAllAsync()
         {
             var cameras = await this.cameraRepository.ReadAllAsync().ConfigureAwait(false);
             return cameras.Select(
-                x => new ApiCameraInfo
+                x => new ApiCamera
                 {
+                    Places = x.Places.Select(
+                                  p => new ApiPlace
+                                  {
+                                      Height = p.Height,
+                                      Id = p.Id,
+                                      Width = p.Width,
+                                      X = p.X,
+                                      Y = p.Y
+                                  })
+                              .ToList(),
+                    Number = x.Number,
                     Description = x.Description,
-                    Number = x.Number
+                    Url = x.Url
                 });
         }
 

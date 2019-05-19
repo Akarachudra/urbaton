@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using AForge;
 using AForge.Imaging.Filters;
 using AForge.Video;
-using Newtonsoft.Json;
 using Refit;
 using Point = System.Drawing.Point;
 
@@ -15,9 +12,9 @@ namespace CarDetection
 {
     public partial class Form1 : Form
     {
-        private const string PlacesPath = "Places.json";
         private NewFrameEventHandler frameHandler;
         private JPEGStream videoSource;
+        private int cameraIndex = 0;
         private readonly object locker = new object();
         private readonly IDetectionApi detectionApi;
 
@@ -29,21 +26,28 @@ namespace CarDetection
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            videoSource = new JPEGStream("http://94.72.19.56/jpg/image.jpg?size=3");
+            var cameras = this.detectionApi.GetAllCamerasAsync().Result;
+            Cache.Cameras = cameras;
+            foreach (var camera in cameras)
+            {
+                comboBox1.Items.Add(camera.Description);
+            }
+
+            comboBox1.SelectedIndex = 0;
+            SetCamera(0);
+        }
+
+        private void SetCamera(int index)
+        {
+            var camera = Cache.Cameras[index];
+            videoSource?.Stop();
+            videoSource = new JPEGStream(camera.Url);
 
             frameHandler = new NewFrameEventHandler(video_NewFrame);
             videoSource.NewFrame += frameHandler;
             videoSource.Start();
-            if (File.Exists(PlacesPath))
-            {
-                DataCache.Places = JsonConvert.DeserializeObject<IList<Place>>(File.ReadAllText(PlacesPath));
-            }
 
             RefreshPlaces();
-        }
-
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
         }
 
         public void video_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -82,7 +86,7 @@ namespace CarDetection
             lock (locker)
             {
                 var index = -1;
-                foreach (var place in DataCache.Places)
+                foreach (var place in Cache.Cameras[cameraIndex].Places)
                 {
                     index++;
                     var count = 0;
@@ -147,7 +151,7 @@ namespace CarDetection
                 var index = listBox1.SelectedIndex;
                 if (index != -1)
                 {
-                    var place = DataCache.Places[index];
+                    var place = Cache.Cameras[cameraIndex].Places[index];
                     place.X = Convert.ToInt32(this.xBox.Text);
                     place.Y = Convert.ToInt32(this.yBox.Text);
                     place.Width = Convert.ToInt32(this.widthBox.Text);
@@ -155,15 +159,16 @@ namespace CarDetection
                 }
                 else
                 {
-                    DataCache.Places.Add(
-                        new Place
-                        {
-                            Id = DataCache.Places.Count + 1,
-                            X = Convert.ToInt32(this.xBox.Text),
-                            Y = Convert.ToInt32(this.yBox.Text),
-                            Width = Convert.ToInt32(this.widthBox.Text),
-                            Height = Convert.ToInt32(this.heightBox.Text)
-                        });
+                    Cache.Cameras[cameraIndex]
+                         .Places.Add(
+                             new Place
+                             {
+                                 Id = Cache.Cameras[cameraIndex].Places.Count + 1,
+                                 X = Convert.ToInt32(this.xBox.Text),
+                                 Y = Convert.ToInt32(this.yBox.Text),
+                                 Width = Convert.ToInt32(this.widthBox.Text),
+                                 Height = Convert.ToInt32(this.heightBox.Text)
+                             });
                 }
 
                 RefreshPlaces();
@@ -173,10 +178,8 @@ namespace CarDetection
 
         private void RefreshPlaces()
         {
-            var serialized = JsonConvert.SerializeObject(DataCache.Places);
-            File.WriteAllText(PlacesPath, serialized);
             this.listBox1.Items.Clear();
-            foreach (var place in DataCache.Places)
+            foreach (var place in Cache.Cameras[cameraIndex].Places)
             {
                 this.listBox1.Items.Add(place.ToString());
             }
@@ -187,7 +190,7 @@ namespace CarDetection
             if (listBox1.SelectedIndex != -1)
             {
                 var index = listBox1.SelectedIndex;
-                var place = DataCache.Places[index];
+                var place = Cache.Cameras[cameraIndex].Places[index];
                 xBox.Text = place.X.ToString();
                 yBox.Text = place.Y.ToString();
                 widthBox.Text = place.Width.ToString();
@@ -199,15 +202,16 @@ namespace CarDetection
         {
             lock (locker)
             {
-                DataCache.Places.Add(
-                    new Place
-                    {
-                        Id = DataCache.Places.Count + 1,
-                        X = Convert.ToInt32(this.xBox.Text),
-                        Y = Convert.ToInt32(this.yBox.Text),
-                        Width = Convert.ToInt32(this.widthBox.Text),
-                        Height = Convert.ToInt32(this.heightBox.Text)
-                    });
+                Cache.Cameras[cameraIndex]
+                     .Places.Add(
+                         new Place
+                         {
+                             Id = Cache.Cameras[cameraIndex].Places.Count + 1,
+                             X = Convert.ToInt32(this.xBox.Text),
+                             Y = Convert.ToInt32(this.yBox.Text),
+                             Width = Convert.ToInt32(this.widthBox.Text),
+                             Height = Convert.ToInt32(this.heightBox.Text)
+                         });
 
                 RefreshPlaces();
             }
@@ -218,8 +222,8 @@ namespace CarDetection
             IList<Place> placesCopy;
             lock (this.locker)
             {
-                placesCopy = new List<Place>(DataCache.Places.Count);
-                foreach (var place in DataCache.Places)
+                placesCopy = new List<Place>(Cache.Cameras[cameraIndex].Places.Count);
+                foreach (var place in Cache.Cameras[cameraIndex].Places)
                 {
                     placesCopy.Add(place);
                 }
@@ -237,7 +241,7 @@ namespace CarDetection
         private void timer1_Tick(object sender, EventArgs e)
         {
             var feedbacks = this.detectionApi.GetAllFeedbacksAsync().Result;
-            DataCache.Feedbacks = feedbacks;
+            Cache.Feedbacks = feedbacks;
             listBox2.Items.Clear();
             foreach (var feedback in feedbacks)
             {
@@ -256,8 +260,20 @@ namespace CarDetection
             var index = listBox2.SelectedIndex;
             if (index != -1)
             {
-                var feedback = DataCache.Feedbacks[index];
+                var feedback = Cache.Feedbacks[index];
                 MessageBox.Show(feedback.Text, feedback.Title);
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex != -1)
+            {
+                lock (locker)
+                {
+                    cameraIndex = comboBox1.SelectedIndex;
+                    SetCamera(cameraIndex);
+                }
             }
         }
     }

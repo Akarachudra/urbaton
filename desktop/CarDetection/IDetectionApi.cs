@@ -11,5 +11,8 @@ namespace CarDetection
 
         [Get("/api/feedback")]
         Task<IList<Feedback>> GetAllFeedbacksAsync();
+
+        [Get("/api/camera")]
+        Task<IList<Camera>> GetAllCamerasAsync();
     }
 }

@@ -2,9 +2,9 @@
 
 namespace CarDetection
 {
-    public static class DataCache
+    public static class Cache
     {
-        public static IList<Place> Places = new List<Place>();
+        public static IList<Camera> Cameras = new List<Camera>();
 
         public static IList<Feedback> Feedbacks = new List<Feedback>();
     }
