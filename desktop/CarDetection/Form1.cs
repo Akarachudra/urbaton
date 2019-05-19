@@ -219,23 +219,22 @@ namespace CarDetection
 
         private void sendToServer_Click(object sender, EventArgs e)
         {
-            IList<Place> placesCopy;
             lock (this.locker)
             {
-                placesCopy = new List<Place>(Cache.Cameras[cameraIndex].Places.Count);
+                var placesCopy = new List<Place>(Cache.Cameras[cameraIndex].Places.Count);
                 foreach (var place in Cache.Cameras[cameraIndex].Places)
                 {
                     placesCopy.Add(place);
                 }
-            }
 
-            this.detectionApi.PutCameraAsync(
-                    new Camera
-                    {
-                        Number = 1,
-                        Places = placesCopy
-                    })
-                .Wait();
+                this.detectionApi.PutCameraAsync(
+                        new Camera
+                        {
+                            Number = cameraIndex + 1,
+                            Places = placesCopy
+                        })
+                    .Wait();
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
