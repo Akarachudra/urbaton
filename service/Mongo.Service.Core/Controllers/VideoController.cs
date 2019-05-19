@@ -9,7 +9,7 @@ namespace Mongo.Service.Core.Controllers
 {
     public class VideoController : ApiController
     {
-        private const int FramesCount = 5;
+        private const int FramesCount = 7;
         private const string BasePath = "C:\\FakeVideo";
         private readonly TimeSpan framesDiff = TimeSpan.FromSeconds(3);
         private static DateTime lastReponseDateTime = DateTime.MinValue;
@@ -23,6 +23,7 @@ namespace Mongo.Service.Core.Controllers
             if ((newLastResponseDateTime - lastReponseDateTime).TotalSeconds > framesDiff.TotalSeconds)
             {
                 currentFrame = (currentFrame + 1) % FramesCount;
+                lastReponseDateTime = newLastResponseDateTime;
             }
 
             var path = Path.Combine(BasePath, $"{currentFrame}.jpg");
@@ -35,7 +36,6 @@ namespace Mongo.Service.Core.Controllers
                     result.Content = new ByteArrayContent(ms.ToArray());
 
                     result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-                    lastReponseDateTime = newLastResponseDateTime;
                     return result;
                 }
             }
